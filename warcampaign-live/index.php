@@ -9,12 +9,17 @@ get_header();
 
 $stream_title = get_theme_mod('stream_title', 'War Campaign Live');
 $stream_subtitle = get_theme_mod('stream_subtitle', 'Your Source for Indie Comics');
-$stream_url = get_theme_mod('stream_embed_url', '');
+$stream_hls_url = get_theme_mod('stream_hls_url', '');
+$stream_embed_url = get_theme_mod('stream_embed_url', '');
 $is_live = get_theme_mod('is_stream_live', false);
 
 // Calculate yesterday's date for "last streamed"
 $yesterday = new DateTime('yesterday');
 $last_streamed = $yesterday->format('F j, Y');
+
+// Determine which player to use
+$use_hls = !empty($stream_hls_url);
+$use_embed = !empty($stream_embed_url) && !$use_hls;
 ?>
 
 <section class="stream-section">
@@ -31,25 +36,59 @@ $last_streamed = $yesterday->format('F j, Y');
 
     <div class="player-container">
         <div class="player-wrapper">
-            <?php if (!empty($stream_url) && $is_live) : ?>
+            <?php if ($use_embed && $is_live) : ?>
+                <!-- Embed Player (YouTube/Twitch fallback) -->
                 <iframe
-                    src="<?php echo esc_url($stream_url); ?>"
+                    src="<?php echo esc_url($stream_embed_url); ?>"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen>
                 </iframe>
             <?php else : ?>
-                <div class="player-placeholder">
+                <!-- Video.js HLS Player -->
+                <video
+                    id="warcampaign-player"
+                    class="video-js vjs-big-play-centered vjs-theme-warcampaign"
+                    controls
+                    preload="auto"
+                    data-setup='{"fluid": true}'
+                    poster="<?php echo esc_url(get_template_directory_uri() . '/assets/images/player-placeholder.png'); ?>"
+                    <?php if ($use_hls && $is_live) : ?>
+                    style="display: block;"
+                    <?php else : ?>
+                    style="display: none;"
+                    <?php endif; ?>
+                >
+                    <?php if ($use_hls && $is_live) : ?>
+                    <source src="<?php echo esc_url($stream_hls_url); ?>" type="application/x-mpegURL">
+                    <?php endif; ?>
+                    <p class="vjs-no-js">
+                        To view this video please enable JavaScript, or consider upgrading to a
+                        web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                    </p>
+                </video>
+
+                <!-- Placeholder Overlay (shown when offline or no stream configured) -->
+                <div id="player-placeholder" class="player-placeholder" <?php if ($use_hls && $is_live) echo 'style="display: none;"'; ?>>
                     <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/player-placeholder.png'); ?>"
-                         alt="Stream Placeholder">
+                         alt="War Campaign Live Stream">
                     <div class="play-overlay">
-                        <button class="play-button" aria-label="Watch Stream">
+                        <button id="play-stream-btn" class="play-button" aria-label="<?php echo $is_live ? 'Watch Live Stream' : 'Stream Offline'; ?>">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                 <path d="M8 5v14l11-7z"/>
                             </svg>
                         </button>
                         <span class="watch-now-text">
-                            <?php echo $is_live ? 'Watch Now' : 'Stream Offline'; ?>
+                            <?php if ($is_live) : ?>
+                                <span class="live-badge-text">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#ff4444" style="vertical-align: middle; margin-right: 5px; animation: pulse 1.5s infinite;">
+                                        <circle cx="12" cy="12" r="6"/>
+                                    </svg>
+                                    Watch Now
+                                </span>
+                            <?php else : ?>
+                                Stream Offline
+                            <?php endif; ?>
                         </span>
                     </div>
                 </div>
@@ -60,7 +99,7 @@ $last_streamed = $yesterday->format('F j, Y');
     <div class="stream-info">
         <div class="info-card">
             <div class="info-card-label">Stream Status</div>
-            <div class="info-card-value">
+            <div class="info-card-value stream-status-value">
                 <?php if ($is_live) : ?>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#ff4444" style="vertical-align: middle; margin-right: 5px;">
                         <circle cx="12" cy="12" r="8"/>

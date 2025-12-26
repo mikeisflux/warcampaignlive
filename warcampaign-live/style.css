@@ -491,3 +491,164 @@ img {
         font-size: 1rem;
     }
 }
+
+/* ========================================
+   Video.js Custom Theme - War Campaign
+   ======================================== */
+
+/* Video.js container */
+.video-js.vjs-theme-warcampaign {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-light);
+}
+
+/* Make video.js fluid and responsive */
+.player-wrapper .video-js {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Big play button styling */
+.video-js.vjs-theme-warcampaign .vjs-big-play-button {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    border: none;
+    box-shadow: 0 0 30px rgba(255, 107, 0, 0.6);
+    transition: all 0.3s ease;
+}
+
+.video-js.vjs-theme-warcampaign:hover .vjs-big-play-button {
+    background: var(--primary-dark);
+    box-shadow: 0 0 50px rgba(255, 107, 0, 0.8);
+    transform: scale(1.1);
+}
+
+.video-js.vjs-theme-warcampaign .vjs-big-play-button .vjs-icon-placeholder:before {
+    font-size: 50px;
+    line-height: 100px;
+}
+
+/* Control bar styling */
+.video-js.vjs-theme-warcampaign .vjs-control-bar {
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+    height: 50px;
+}
+
+/* Progress bar */
+.video-js.vjs-theme-warcampaign .vjs-progress-control {
+    position: absolute;
+    top: -10px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 10px;
+}
+
+.video-js.vjs-theme-warcampaign .vjs-progress-holder {
+    height: 5px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.video-js.vjs-theme-warcampaign .vjs-play-progress {
+    background: var(--primary-color);
+}
+
+.video-js.vjs-theme-warcampaign .vjs-play-progress:before {
+    font-size: 14px;
+    color: var(--primary-color);
+}
+
+/* Load progress */
+.video-js.vjs-theme-warcampaign .vjs-load-progress {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Slider */
+.video-js.vjs-theme-warcampaign .vjs-slider {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Volume bar */
+.video-js.vjs-theme-warcampaign .vjs-volume-level {
+    background: var(--primary-color);
+}
+
+/* Buttons hover */
+.video-js.vjs-theme-warcampaign .vjs-button:hover {
+    color: var(--primary-color);
+}
+
+/* Time display */
+.video-js.vjs-theme-warcampaign .vjs-time-control {
+    padding: 0 5px;
+    font-size: 12px;
+}
+
+/* Live badge in player */
+.video-js.vjs-theme-warcampaign.vjs-live .vjs-live-control {
+    display: flex;
+    align-items: center;
+}
+
+.video-js.vjs-theme-warcampaign .vjs-live-control .vjs-live-display {
+    background: var(--accent-color);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+/* Poster image (placeholder) */
+.video-js.vjs-theme-warcampaign .vjs-poster {
+    background-size: cover;
+    background-position: center;
+}
+
+/* Loading spinner */
+.video-js.vjs-theme-warcampaign .vjs-loading-spinner {
+    border-color: var(--primary-color);
+}
+
+.video-js.vjs-theme-warcampaign .vjs-loading-spinner:before,
+.video-js.vjs-theme-warcampaign .vjs-loading-spinner:after {
+    border-top-color: var(--primary-color);
+}
+
+/* Error display */
+.video-js.vjs-theme-warcampaign .vjs-error-display {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.video-js.vjs-theme-warcampaign .vjs-error-display .vjs-modal-dialog-content {
+    font-size: 1.2rem;
+    color: var(--accent-color);
+}
+
+/* Quality selector menu (if using quality plugin) */
+.video-js.vjs-theme-warcampaign .vjs-menu {
+    background: rgba(26, 26, 26, 0.95);
+}
+
+.video-js.vjs-theme-warcampaign .vjs-menu-item:hover,
+.video-js.vjs-theme-warcampaign .vjs-menu-item.vjs-selected {
+    background: var(--primary-color);
+    color: var(--text-light);
+}
+
+/* Fullscreen styling */
+.video-js.vjs-theme-warcampaign.vjs-fullscreen {
+    background: #000;
+}
+
+/* Live badge text in watch now */
+.live-badge-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

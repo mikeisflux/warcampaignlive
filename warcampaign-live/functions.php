@@ -59,6 +59,43 @@ function warcampaign_live_scripts() {
         array(),
         null
     );
+
+    // Video.js CSS
+    wp_enqueue_style(
+        'videojs-css',
+        'https://vjs.zencdn.net/8.6.1/video-js.css',
+        array(),
+        '8.6.1'
+    );
+
+    // Video.js core
+    wp_enqueue_script(
+        'videojs',
+        'https://vjs.zencdn.net/8.6.1/video.min.js',
+        array(),
+        '8.6.1',
+        true
+    );
+
+    // Video.js HTTP Streaming (HLS/DASH support) - built into Video.js 8+
+    // For older versions, you would need videojs-http-streaming separately
+
+    // Custom player initialization
+    wp_enqueue_script(
+        'warcampaign-player',
+        get_template_directory_uri() . '/assets/js/player.js',
+        array('videojs'),
+        wp_get_theme()->get('Version'),
+        true
+    );
+
+    // Pass stream settings to JavaScript
+    wp_localize_script('warcampaign-player', 'warcampaignStream', array(
+        'hlsUrl'     => get_theme_mod('stream_hls_url', ''),
+        'isLive'     => get_theme_mod('is_stream_live', false),
+        'autoplay'   => get_theme_mod('stream_autoplay', false),
+        'placeholder' => get_template_directory_uri() . '/assets/images/player-placeholder.png',
+    ));
 }
 add_action('wp_enqueue_scripts', 'warcampaign_live_scripts');
 
@@ -97,17 +134,43 @@ function warcampaign_live_customize_register($wp_customize) {
         'priority' => 30,
     ));
 
-    // Stream Embed URL
+    // HLS Stream URL (for RTMP converted to HLS)
+    $wp_customize->add_setting('stream_hls_url', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ));
+
+    $wp_customize->add_control('stream_hls_url', array(
+        'label'       => __('HLS Stream URL', 'warcampaign-live'),
+        'description' => __('Enter your HLS stream URL (.m3u8) from your RTMP server', 'warcampaign-live'),
+        'section'     => 'warcampaign_stream_settings',
+        'type'        => 'url',
+    ));
+
+    // Stream Embed URL (fallback for YouTube/Twitch)
     $wp_customize->add_setting('stream_embed_url', array(
         'default'           => '',
         'sanitize_callback' => 'esc_url_raw',
     ));
 
     $wp_customize->add_control('stream_embed_url', array(
-        'label'       => __('Stream Embed URL', 'warcampaign-live'),
-        'description' => __('Enter your livestream embed URL (YouTube, Twitch, etc.)', 'warcampaign-live'),
+        'label'       => __('Embed URL (Fallback)', 'warcampaign-live'),
+        'description' => __('Fallback embed URL for YouTube/Twitch if not using HLS', 'warcampaign-live'),
         'section'     => 'warcampaign_stream_settings',
         'type'        => 'url',
+    ));
+
+    // Autoplay Setting
+    $wp_customize->add_setting('stream_autoplay', array(
+        'default'           => false,
+        'sanitize_callback' => 'warcampaign_sanitize_checkbox',
+    ));
+
+    $wp_customize->add_control('stream_autoplay', array(
+        'label'       => __('Autoplay Stream', 'warcampaign-live'),
+        'description' => __('Automatically play when live (muted due to browser policies)', 'warcampaign-live'),
+        'section'     => 'warcampaign_stream_settings',
+        'type'        => 'checkbox',
     ));
 
     // Stream Title
