@@ -8,7 +8,7 @@
                  class="footer-logo">
         </a>
 
-        <p class="footer-tagline">War Campaign Live - Your Premier Indie Comics Livestream & Podcast</p>
+        <p class="footer-tagline">Warcampaign Live - Your Premier Indie Comics Livestream & Podcast</p>
 
         <p class="footer-notice">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 5px;">

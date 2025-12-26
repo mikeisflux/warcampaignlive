@@ -7,7 +7,7 @@
 
 get_header();
 
-$stream_title = get_theme_mod('stream_title', 'War Campaign Live');
+$stream_title = get_theme_mod('stream_title', 'Warcampaign Live');
 $stream_subtitle = get_theme_mod('stream_subtitle', 'Your Source for Indie Comics');
 $stream_hls_url = get_theme_mod('stream_hls_url', '');
 $stream_embed_url = get_theme_mod('stream_embed_url', '');
@@ -71,7 +71,7 @@ $use_embed = !empty($stream_embed_url) && !$use_hls;
                 <!-- Placeholder Overlay (shown when offline or no stream configured) -->
                 <div id="player-placeholder" class="player-placeholder" <?php if ($use_hls && $is_live) echo 'style="display: none;"'; ?>>
                     <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/player-placeholder.png'); ?>"
-                         alt="War Campaign Live Stream">
+                         alt="Warcampaign Live Stream">
                     <div class="play-overlay">
                         <button id="play-stream-btn" class="play-button" aria-label="<?php echo $is_live ? 'Watch Live Stream' : 'Stream Offline'; ?>">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -122,16 +122,16 @@ $use_embed = !empty($stream_embed_url) && !$use_hls;
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 5px;">
                     <path d="M21 6h-7.59l3.29-3.29L16 2l-4 4-4-4-.71.71L10.59 6H3c-1.1 0-2 .89-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.11-.9-2-2-2zm0 14H3V8h18v12zM9 10v8l7-4z"/>
                 </svg>
-                War Campaign TV
+                Warcampaign TV
             </div>
         </div>
     </div>
 </section>
 
 <section class="about-section">
-    <h2>About War Campaign Live</h2>
+    <h2>About Warcampaign Live</h2>
     <p>
-        Welcome to <strong>War Campaign Live</strong> - the ultimate destination for indie comics enthusiasts!
+        Welcome to <strong>Warcampaign Live</strong> - the ultimate destination for indie comics enthusiasts!
         Join us for live discussions, creator interviews, comic reviews, and deep dives into the world of
         independent comics and graphic novels.
     </p>

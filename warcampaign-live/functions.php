@@ -1,6 +1,6 @@
 <?php
 /**
- * War Campaign Live Theme Functions
+ * Warcampaign Live Theme Functions
  *
  * @package WarCampaignLive
  * @version 1.0.0
@@ -175,7 +175,7 @@ function warcampaign_live_customize_register($wp_customize) {
 
     // Stream Title
     $wp_customize->add_setting('stream_title', array(
-        'default'           => 'War Campaign Live',
+        'default'           => 'Warcampaign Live',
         'sanitize_callback' => 'sanitize_text_field',
     ));
 
