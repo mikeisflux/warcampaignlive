@@ -1,5 +1,5 @@
 /**
- * War Campaign Live - Video Player Initialization
+ * Warcampaign Live - Video Player Initialization
  * Uses Video.js with HLS support for livestreaming
  */
 
@@ -18,7 +18,7 @@
 
         // Check if we have a video element
         if (!videoElement) {
-            console.log('War Campaign: No video element found');
+            console.log('Warcampaign: No video element found');
             return;
         }
 
@@ -56,7 +56,7 @@
         // Custom error handling
         player.on('error', function() {
             var error = player.error();
-            console.error('War Campaign Player Error:', error);
+            console.error('Warcampaign Player Error:', error);
 
             // Show placeholder on error
             showPlaceholder();
@@ -67,21 +67,21 @@
 
         // Handle stream end
         player.on('ended', function() {
-            console.log('War Campaign: Stream ended');
+            console.log('Warcampaign: Stream ended');
             showPlaceholder();
             updateStreamStatus('Stream Ended');
         });
 
         // Handle successful play
         player.on('playing', function() {
-            console.log('War Campaign: Stream playing');
+            console.log('Warcampaign: Stream playing');
             hidePlaceholder();
             updateStreamStatus('LIVE');
         });
 
         // Handle waiting/buffering
         player.on('waiting', function() {
-            console.log('War Campaign: Buffering...');
+            console.log('Warcampaign: Buffering...');
         });
 
         // If we have an HLS URL and stream is live, load it
@@ -92,7 +92,7 @@
                 // Autoplay with muted (required by browsers)
                 player.muted(true);
                 player.play().catch(function(error) {
-                    console.log('War Campaign: Autoplay prevented:', error);
+                    console.log('Warcampaign: Autoplay prevented:', error);
                 });
             }
         }
@@ -105,7 +105,7 @@
                 if (hlsUrl && isLive) {
                     loadStream(hlsUrl);
                     player.play().catch(function(error) {
-                        console.log('War Campaign: Play prevented:', error);
+                        console.log('Warcampaign: Play prevented:', error);
                     });
                 } else {
                     // Show offline message
@@ -116,7 +116,7 @@
 
         // Function to load HLS stream
         function loadStream(url) {
-            console.log('War Campaign: Loading stream:', url);
+            console.log('Warcampaign: Loading stream:', url);
 
             player.src({
                 src: url,
@@ -170,6 +170,6 @@
     }
 
     // Log HLS support status
-    console.log('War Campaign: HLS Support:', isHlsSupported() ? 'Yes' : 'No (using Video.js VHS)');
+    console.log('Warcampaign: HLS Support:', isHlsSupported() ? 'Yes' : 'No (using Video.js VHS)');
 
 })();
