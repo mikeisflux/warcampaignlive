@@ -1,0 +1,493 @@
+/*
+Theme Name: War Campaign Live
+Theme URI: https://warcampaignlive.com
+Author: War Campaign
+Author URI: https://warcampaignlive.com
+Description: A custom WordPress theme for War Campaign - an Indie Comics Livestream & Podcast. Features a centered video player with live streaming capabilities.
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: warcampaign-live
+Tags: one-column, custom-logo, streaming, podcast, indie-comics
+*/
+
+/* CSS Reset & Base Styles */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary-color: #ff6b00;
+    --primary-dark: #e55d00;
+    --secondary-color: #1a1a1a;
+    --accent-color: #ff4444;
+    --text-light: #ffffff;
+    --text-dark: #333333;
+    --bg-dark: #0d0d0d;
+    --bg-gradient: linear-gradient(135deg, #1a1a1a 0%, #2d1810 50%, #1a1a1a 100%);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-light);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--primary-dark);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Header Styles */
+.site-header {
+    background: var(--secondary-color);
+    padding: 15px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 20px rgba(255, 107, 0, 0.3);
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.site-logo {
+    max-height: 60px;
+    width: auto;
+}
+
+.site-tagline {
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.live-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(255, 68, 68, 0.2);
+    border-radius: 25px;
+    border: 1px solid var(--accent-color);
+}
+
+.live-indicator.offline {
+    background: rgba(128, 128, 128, 0.2);
+    border-color: #666;
+}
+
+.live-dot {
+    width: 12px;
+    height: 12px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+}
+
+.live-indicator.offline .live-dot {
+    background: #666;
+    animation: none;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1.2);
+    }
+}
+
+.live-text {
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent-color);
+}
+
+.live-indicator.offline .live-text {
+    color: #666;
+}
+
+/* Main Content */
+.site-main {
+    flex: 1;
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background: var(--bg-gradient);
+}
+
+/* Hero / Stream Section */
+.stream-section {
+    width: 100%;
+    max-width: 1400px;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.stream-header {
+    margin-bottom: 30px;
+}
+
+.stream-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-light);
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.stream-title span {
+    color: var(--primary-color);
+}
+
+.stream-subtitle {
+    font-size: 1.2rem;
+    color: #aaa;
+    margin-bottom: 5px;
+}
+
+.indie-comics-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: var(--text-light);
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 15px;
+    box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+}
+
+/* Video Player Container */
+.player-container {
+    width: 66.67%;
+    margin: 0 auto;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 50px rgba(255, 107, 0, 0.3),
+                0 0 100px rgba(255, 68, 68, 0.1);
+}
+
+.player-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    background: var(--secondary-color);
+}
+
+.player-wrapper iframe,
+.player-wrapper video,
+.player-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.player-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.player-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+    transition: background 0.3s ease;
+}
+
+.player-placeholder:hover .play-overlay {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.play-button {
+    width: 100px;
+    height: 100px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 30px rgba(255, 107, 0, 0.6);
+    cursor: pointer;
+    border: none;
+}
+
+.play-button:hover {
+    transform: scale(1.1);
+    background: var(--primary-dark);
+    box-shadow: 0 0 50px rgba(255, 107, 0, 0.8);
+}
+
+.play-button svg {
+    width: 40px;
+    height: 40px;
+    fill: var(--text-light);
+    margin-left: 8px;
+}
+
+.watch-now-text {
+    color: var(--text-light);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Stream Info */
+.stream-info {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.info-card {
+    background: rgba(26, 26, 26, 0.8);
+    padding: 20px 30px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 107, 0, 0.3);
+    min-width: 200px;
+}
+
+.info-card-label {
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.info-card-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* About Section */
+.about-section {
+    width: 100%;
+    max-width: 900px;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.about-section h2 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.about-section p {
+    color: #ccc;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.about-features {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.feature-item svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--primary-color);
+}
+
+/* Footer */
+.site-footer {
+    background: var(--secondary-color);
+    padding: 30px 20px;
+    text-align: center;
+    border-top: 1px solid rgba(255, 107, 0, 0.3);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-logo {
+    max-height: 50px;
+    margin-bottom: 15px;
+}
+
+.footer-tagline {
+    color: #888;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.footer-notice {
+    color: #666;
+    font-size: 0.8rem;
+    font-style: italic;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.copyright {
+    color: #666;
+    font-size: 0.85rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .player-container {
+        width: 80%;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .site-logo {
+        max-height: 50px;
+    }
+
+    .stream-title {
+        font-size: 1.8rem;
+    }
+
+    .player-container {
+        width: 95%;
+    }
+
+    .play-button {
+        width: 70px;
+        height: 70px;
+    }
+
+    .play-button svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    .watch-now-text {
+        font-size: 1.1rem;
+    }
+
+    .stream-info {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .info-card {
+        width: 100%;
+    }
+
+    .about-features {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .site-header {
+        padding: 10px 0;
+    }
+
+    .stream-title {
+        font-size: 1.4rem;
+    }
+
+    .stream-subtitle {
+        font-size: 1rem;
+    }
+
+    .play-button {
+        width: 60px;
+        height: 60px;
+    }
+
+    .watch-now-text {
+        font-size: 1rem;
+    }
+}
